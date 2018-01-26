@@ -4,6 +4,7 @@ separationsheet_site
 import logging
 import random
 import string
+import json
 from io import BytesIO
 from tempfile import TemporaryDirectory
 from uuid import uuid4
@@ -66,6 +67,12 @@ def root():
     return content
 
 
+@BLUEPRINT.route("/list")
+def list():
+    # TODO
+    pass
+
+
 @BLUEPRINT.route("/both", methods=['GET', 'POST'])
 def both():
     form = BothForm()
@@ -88,6 +95,11 @@ def just_removal():
     form = JustRemovalForm()
     # POST
     if form.validate_on_submit():
+        # caching should go here
+        form_dict = dict(request.form)
+        json_form = json.dumps(form_dict)
+        # Save the JSON to a db
+        print(json_form)
         return render_template(
             "just_removal.html",
             acc_no=request.form['acc_no'],
