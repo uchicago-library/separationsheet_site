@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block body %}
+<form method="POST" action="/both">
+    <div class="form-group">
+        {{ form.count.label }}<br />
+        {{ form.count() }}
+    </div>
+    <div><input type=submit value="Generate!" /></div>
+</form>
+{% endblock %}

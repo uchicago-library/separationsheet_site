@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+table {
+        border-collapse: collapse;
+}
+td {
+    vertical-align: top;
+    padding: 8px;
+}
+div.whitespace{
+    white-space: pre-wrap;
+}
+div.pagebreak {
+    page-break-after: always;
+}
+</style>
+{% endblock %}
+{% block title %}University of Chicago - Digital Material Sheets{% endblock %}
+{% block body %}
+<table width=100% height=630px>
+    <tr>
+	<td width=50%>
+	    <center>Special Collections Research Center</center>
+	    <center>University of Chicago Library</center>
+	    <hr />
+	    <center><b><u>Digital Material Removed</u></b></center>
+	    <font size="-4" color="gray"><center>File listing available on request</center></font>
+	    <br />
+            <b>Accession Number:</b> {{ acc_no }}
+	    <br />
+	    <br />
+            <b>Batch Name:</b> {{ batch_name }}
+	    <br />
+	    <br />
+	    <b>Identifier:</b> {{ identifier }}
+	    <br />
+	    <br />
+	    <center><img src="/barcode/{{ identifier }}"></center>
+	    <br />
+            {% if media_type %}
+            <b>Media Type:</b> <div class="whitespace">{{ media_type }}</div>
+	    <br />
+            {% endif %}
+            {% if existing_label %}
+            <b>Existing Label:</b> <div class="whitespace">{{ existing_label }}</div>
+	    <br />
+            {% endif %}
+            <b>Notes:</b> <div class="whitespace">{{ note }}<div>
+	</td>
+	<td width=50%>
+	</td>
+    </tr>
+</table>
+<div class="pagebreak"></div>
+{% endblock %}

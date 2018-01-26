@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+table {
+        border-collapse: collapse;
+}
+td {
+    vertical-align: top;
+    padding: 8px;
+}
+div.pagebreak {
+    page-break-after: always;
+}
+</style>
+{% endblock %}
+{% block title %}University of Chicago - Digital Material Sheets{% endblock %}
+{% block body %}
+{% for identifier in identifiers %}
+<table width=100% height=630px>
+    <tr>
+	<td width=50%>
+	    <center>Special Collections Research Center</center>
+	    <center>University of Chicago Library</center>
+	    <hr />
+	    <center><b><u>Digital Material Removed</u></b></center>
+	    <font size="-4" color="gray"><center>File listing available on request</center></font>
+	    <br />
+	    <b>Accession Number:</b>
+	    <br />
+	    <br />
+	    <b>Batch Name:</b>
+	    <br />
+	    <br />
+	    <br />
+	    <b>Identifier:</b> {{ identifier }}
+	    <br />
+	    <center><img src="/barcode/{{ identifier }}"></center>
+	    <br />
+	    <b>Media Type:</b>
+	    <br />
+	    <br />
+	    <b>Existing Label:</b>
+	    <br />
+	    <br />
+	    <br />
+	    <b>Additional Notes:</b>
+	    <br />
+	    <br />
+	    <br />
+	    <br />
+	    <br />
+	    <hr />
+	    <b>Archivist Notes:</b>
+	</td>
+	<td width=50%>
+	    <center>Special Collections Research Center</center>
+	    <center>University of Chicago Library</center>
+	    <hr />
+	    <center><b><u>Digital Material Submission Form</u></b></center>
+	    <font size="-4" color="gray"><center>Complete and deliver to Digital Accessions Specialist</center></font>
+	    <br />
+	    <b>Accession Number:</b>
+	    <br />
+	    <br />
+	    <b>Batch Name:</b>
+	    <br />
+	    <br />
+	    <br />
+	    <b>Identifier:</b> {{ identifier }}
+	    <br />
+	    <center><img src="/barcode/{{ identifier }}"></center>
+	    <br/>
+	    <br/>
+	    <b>Notes to DAS:</b>
+	</td>
+    </tr>
+</table>
+<div class="pagebreak"></div>
+{% endfor %}
+{% endblock %}

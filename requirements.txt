@@ -1,0 +1,5 @@
+Flask
+pyBarcode
+Pillow
+wtforms
+flask_wtf
