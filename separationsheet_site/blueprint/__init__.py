@@ -90,7 +90,6 @@ def root():
 @BLUEPRINT.route("/list")
 def list():
     records = db.list_records()
-    print(records)
     for x in records:
         x['link'] = "/view/{}".format(x['identifier'])
     return render_template(
