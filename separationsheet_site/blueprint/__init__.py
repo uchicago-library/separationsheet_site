@@ -13,6 +13,7 @@ from os.path import join
 from flask import Blueprint, render_template, send_file, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, TextAreaField
+from wtforms.validators import DataRequired
 
 import barcode
 
@@ -31,9 +32,9 @@ BLUEPRINT = Blueprint('separationsheet_site', __name__,
 
 
 class JustRemovalForm(FlaskForm):
-    acc_no = StringField("Accession Number")
-    batch_name = StringField("Batch Name")
-    identifier = StringField("Identifier")
+    acc_no = StringField("Accession Number", [DataRequired()])
+    batch_name = StringField("Batch Name", [DataRequired()])
+    identifier = StringField("Identifier", [DataRequired()])
     media_type = TextAreaField("Media Type")
     existing_label = TextAreaField("Existing Label")
     note = TextAreaField("Notes")
@@ -41,6 +42,24 @@ class JustRemovalForm(FlaskForm):
 
 class BothForm(FlaskForm):
     count = IntegerField("Count")
+
+
+class FakeDB:
+    def __init__(self):
+        self.records = {}
+
+    def write_record(self, record):
+        unmulti = {x: record[x][0] for x in record}
+        self.records[unmulti['identifier']] = unmulti
+
+    def list_records(self, cursor=0):
+        return [self.records[x] for x in self.records]
+
+    def get_record(self, q):
+        return self.records[q]
+
+
+db = FakeDB()
 
 
 def make_identifier():
@@ -58,6 +77,7 @@ def root():
     <html>
     <body>
     <l>
+        <li><a href="/list">List Processed Forms</a></li>
         <li><a href="/both">Make form pairs</a></li>
         <li><a href="/removal">Make a removal sheet</a></li>
     </l>
@@ -69,8 +89,28 @@ def root():
 
 @BLUEPRINT.route("/list")
 def list():
-    # TODO
-    pass
+    records = db.list_records()
+    print(records)
+    for x in records:
+        x['link'] = "/view/{}".format(x['identifier'])
+    return render_template(
+        "list.html",
+        records=records
+    )
+
+
+@BLUEPRINT.route("/view/<string:identifier>")
+def view(identifier):
+    record = db.get_record(identifier)
+    return render_template(
+        "just_removal.html",
+        acc_no=record['acc_no'],
+        batch_name=record['batch_name'],
+        identifier=record['identifier'],
+        media_type=record['media_type'],
+        existing_label=record['existing_label'],
+        note=record['note']
+    )
 
 
 @BLUEPRINT.route("/both", methods=['GET', 'POST'])
@@ -95,11 +135,8 @@ def just_removal():
     form = JustRemovalForm()
     # POST
     if form.validate_on_submit():
-        # caching should go here
         form_dict = dict(request.form)
-        json_form = json.dumps(form_dict)
-        # Save the JSON to a db
-        print(json_form)
+        db.write_record(form_dict)
         return render_template(
             "just_removal.html",
             acc_no=request.form['acc_no'],
