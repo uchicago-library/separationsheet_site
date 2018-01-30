@@ -5,26 +5,45 @@
         {{ form.acc_no.label }}<br />
         {{ form.acc_no() }}
     </div>
+    <br />
     <div class="form-group">
         {{ form.batch_name.label }}<br />
         {{ form.batch_name() }}
     </div>
+    <br />
     <div class="form-group">
         {{ form.identifier.label }}<br />
         {{ form.identifier() }}
     </div>
+    <br />
     <div class="form-group">
         {{ form.media_type.label }}<br />
         {{ form.media_type() }}
     </div>
     <div class="form-group">
+        {{ form.media_type_freetype.label }}<br />
+        {{ form.media_type_freetype() }}
+    </div>
+    <br />
+    <div class="form-group">
         {{ form.existing_label.label }}<br />
         {{ form.existing_label() }}
     </div>
+    <br />
+    <div class="form-group">
+        {{ form.restriction.label }}<br />
+        {{ form.restriction() }}
+    </div>
+    <div class="form-group">
+        {{ form.restriction_freetype.label }}<br />
+        {{ form.restriction_freetype() }}
+    </div>
+    <br />
     <div class="form-group">
         {{ form.note.label }}<br />
         {{ form.note() }}
     </div>
+    <br />
     <div><input type=submit value="Generate!" /></div>
 </form>
 {% endblock %}

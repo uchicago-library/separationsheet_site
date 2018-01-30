@@ -4,7 +4,6 @@ separationsheet_site
 import logging
 import random
 import string
-import json
 from io import BytesIO
 from tempfile import TemporaryDirectory
 from uuid import uuid4
@@ -12,7 +11,7 @@ from os.path import join
 
 from flask import Blueprint, render_template, send_file, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, TextAreaField
+from wtforms import StringField, IntegerField, TextAreaField, SelectField, ValidationError
 from wtforms.validators import DataRequired
 
 import barcode
@@ -31,11 +30,46 @@ BLUEPRINT = Blueprint('separationsheet_site', __name__,
                       static_folder='static')
 
 
+# TODO: Make these into a real validator
+def onlyOtherRestriction(form, field):
+    if field.data and form.restriction.data != "Other":
+        raise ValidationError("Restriction Dropdown not set to 'Other'")
+
+
+def onlyOtherMediaType(form, field):
+    if field.data and form.media_type.data != "Other":
+        raise ValidationError("Restriction Dropdown not set to 'Other'")
+
+
 class JustRemovalForm(FlaskForm):
     acc_no = StringField("Accession Number", [DataRequired()])
     batch_name = StringField("Batch Name", [DataRequired()])
     identifier = StringField("Identifier", [DataRequired()])
-    media_type = TextAreaField("Media Type")
+    restriction = SelectField(
+        "Restriction",
+        choices=[
+            ('', 'None'),
+            ('R-30', 'R-30'),
+            ('R-50', 'R-50'),
+            ('R-80', 'R-80'),
+            ('R-X', 'R-X'),
+            ('Other', 'Other')
+        ]
+    )
+    restriction_freetype = TextAreaField("Other Restriction", [onlyOtherRestriction])
+    media_type = SelectField(
+        "Media Type",
+        choices=[
+            ('', 'None'),
+            ("3.5\" Floppy Disk", "3.5\" Floppy Disk"),
+            ("CD", "CD"),
+            ("DVD", "DVD"),
+            ("Flash Drive", "Flash Drive"),
+            ("External Hard Drive", "External Hard Drive"),
+            ("Other", "Other")
+        ]
+    )
+    media_type_freetype = TextAreaField("Other Media Type", [onlyOtherMediaType])
     existing_label = TextAreaField("Existing Label")
     note = TextAreaField("Notes")
 
@@ -107,7 +141,10 @@ def view(identifier):
         batch_name=record['batch_name'],
         identifier=record['identifier'],
         media_type=record['media_type'],
+        media_type_freetype=record['media_type_freetype'],
         existing_label=record['existing_label'],
+        restriction=record['restriction'],
+        restriction_freetype=record['restriction_freetype'],
         note=record['note']
     )
 
@@ -142,7 +179,10 @@ def just_removal():
             batch_name=request.form['batch_name'],
             identifier=request.form['identifier'],
             media_type=request.form['media_type'],
+            media_type_freetype=request.form['media_type_freetype'],
             existing_label=request.form['existing_label'],
+            restriction=request.form['restriction'],
+            restriction_freetype=request.form['restriction_freetype'],
             note=request.form['note']
         )
     else:

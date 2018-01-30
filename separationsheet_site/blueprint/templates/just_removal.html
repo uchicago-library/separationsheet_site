@@ -1,4 +1,19 @@
 {% extends "base.html" %}
+{% if restriction == "None" %}
+    {% set rtext = '' %}
+{% elif restriction == "Other" %}
+    {% set rtext = restriction_freetype %}
+{% else %}
+    {% set rtext = restriction %}
+{% endif %}
+{% if media_type == "None" %}
+    {% set mtext = '' %}
+{% elif media_type == "Other" %}
+    {% set mtext = media_type_freetype %}
+{% else %}
+    {% set mtext = media_type %}
+{% endif %}
+    
 {% block head %}
 <style>
 table {
@@ -38,15 +53,19 @@ div.pagebreak {
 	    <br />
 	    <center><img src="/barcode/{{ identifier }}"></center>
 	    <br />
-            {% if media_type %}
-            <b>Media Type:</b> <div class="whitespace">{{ media_type }}</div>
+            {% if mtext %}
+            <b>Media Type:</b> <div class="whitespace">{{ mtext }}</div>
 	    <br />
             {% endif %}
             {% if existing_label %}
             <b>Existing Label:</b> <div class="whitespace">{{ existing_label }}</div>
 	    <br />
             {% endif %}
-            <b>Notes:</b> <div class="whitespace">{{ note }}<div>
+            {% if rtext %}
+            <b>Restriction:</b> <div class="whitespace">{{ rtext }}</div>
+            <br />
+            {% endif %}
+            <b>Contents:</b> <div class="whitespace">{{ note }}<div>
 	</td>
 	<td width=50%>
 	</td>
