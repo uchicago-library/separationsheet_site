@@ -26,8 +26,8 @@ log = logging.getLogger(__name__)
 
 
 BLUEPRINT = Blueprint('separationsheet_site', __name__,
-                      template_folder='templates',
-                      static_folder='static')
+                      template_folder='../templates',
+                      static_folder='../static')
 
 
 # TODO: Make these into a real validator
