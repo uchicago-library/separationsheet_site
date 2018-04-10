@@ -16,6 +16,8 @@ from wtforms.validators import DataRequired
 
 import barcode
 
+from .. import mongo
+
 
 __author__ = "Brian Balsamo"
 __email__ = "balsamo@uchicago.edu"
@@ -87,7 +89,7 @@ class FakeDB:
         self.records[unmulti['identifier']] = unmulti
 
     def list_records(self, cursor=0):
-        return [self.records[x] for x in self.records]
+        return mongo.db.separationshieet.sheets.find()
 
     def get_record(self, q):
         return self.records[q]
