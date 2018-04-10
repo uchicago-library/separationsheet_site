@@ -6,11 +6,8 @@ from .blueprint.exceptions import Error
 
 app = Flask(__name__)
 
-app.config["MONGO_DBNAME"] = "separationsheet"
-app.config["MONGO_URI"] = "mongodb://127.0.0.1:27017"
 app.config['WTF_CSRF_ENABLED'] = False
 
-mongo = PyMongo(app)
 
 @app.errorhandler(Error)
 def handle_errors(error):

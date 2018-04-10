@@ -16,12 +16,16 @@ from wtforms.validators import DataRequired
 
 import barcode
 
-from .. import mongo
+from pymongo import MongoClient
 
 
 __author__ = "Brian Balsamo"
 __email__ = "balsamo@uchicago.edu"
 __version__ = "0.0.1"
+
+client = MongoClient()
+db = client.separationsheet
+sheets = db.sheets
 
 
 log = logging.getLogger(__name__)
@@ -89,7 +93,7 @@ class FakeDB:
         self.records[unmulti['identifier']] = unmulti
 
     def list_records(self, cursor=0):
-        return mongo.db.separationshieet.sheets.find()
+        return sheets.find()
 
     def get_record(self, q):
         return self.records[q]
@@ -115,6 +119,7 @@ def root():
 @BLUEPRINT.route("/list")
 def list():
     records = db.list_records()
+    print([x for x in records])
     for x in records:
         x['link'] = "/view/{}".format(x['identifier'])
     return render_template(
