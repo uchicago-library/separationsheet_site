@@ -107,18 +107,7 @@ def make_identifier():
 
 @BLUEPRINT.route("/")
 def root():
-    content = """
-    <html>
-    <body>
-    <l>
-        <li><a href="/list">List Processed Forms</a></li>
-        <li><a href="/both">Make form pairs</a></li>
-        <li><a href="/removal">Make a removal sheet</a></li>
-    </l>
-    </body>
-    </html>
-    """
-    return content
+    return render_template("index.html")
 
 
 @BLUEPRINT.route("/list")
