@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-import separationsheet_site import app
+from separationsheet_site import app
 
 
 class Tests(unittest.TestCase):
