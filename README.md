@@ -33,5 +33,5 @@ Open up your browser and go to http://localhost:5000/
 - [Work Breakdown for Jail](https://docs.google.com/spreadsheets/d/1KhoLlU4GJR_YmVM3-KzC0bXNeXmIvR7e-0oHq0JgA0o/edit?usp=sharing)
 
 ## Authors
-verbalhanglider <tdanstrom@uchicago.edu>
-Brian Balsamo <balsamo@uchicago.edu>
+- verbalhanglider <tdanstrom@uchicago.edu>
+- Brian Balsamo <balsamo@uchicago.edu>
