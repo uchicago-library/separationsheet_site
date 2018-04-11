@@ -1,5 +1,4 @@
 from flask import Flask, jsonify
-from flask_pymongo import PyMongo
 from .blueprint import BLUEPRINT, __version__, __email__, __author__
 from .blueprint.exceptions import Error
 

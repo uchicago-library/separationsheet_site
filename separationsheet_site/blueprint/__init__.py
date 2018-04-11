@@ -23,10 +23,6 @@ __author__ = "Brian Balsamo"
 __email__ = "balsamo@uchicago.edu"
 __version__ = "0.0.1"
 
-client = MongoClient()
-db = client.separationsheet
-sheets = db.sheets
-
 
 log = logging.getLogger(__name__)
 
@@ -84,22 +80,24 @@ class BothForm(FlaskForm):
     count = IntegerField("Count")
 
 
-class FakeDB:
+class Database:
     def __init__(self):
-        self.records = {}
+        client = MongoClient()
+        db = client.separationsheet
+        self.collection = db.sheets
 
     def write_record(self, record):
         unmulti = {x: record[x][0] for x in record}
-        self.records[unmulti['identifier']] = unmulti
+        self.collection.insert(unmulti)
 
     def list_records(self, cursor=0):
-        return sheets.find()
+        return [x for x in self.collection.find()]
 
     def get_record(self, q):
-        return self.records[q]
+        return self.collection.find_one({'identifier': q})
 
 
-db = FakeDB()
+db = Database()
 
 
 def make_identifier():
