@@ -5,7 +5,7 @@ services:
     - mongodb
 before_script:
     - sleep 15
-    - mongo mydb_test --eval 'use separationsheets; db.createCollection("sheets");'
+    - mongo mydb_test --eval 'db.createCollection("sheets");'
 install: 
     - "pip install -r requirements.txt"
     - "pip install -r requirements_dev.txt"
