@@ -1,6 +1,6 @@
 # separationsheet_site
 
-v0.0.1
+v1.0.0
 
 [![Build Status](https://travis-ci.org/uchicago-library/separationsheet_site.svg?branch=master)](https://travis-ci.org/uchicago-library/separationsheet_site) [![Coverage Status](https://coveralls.io/repos/github/uchicago-library/separationsheet_site/badge.svg?branch=master)](https://coveralls.io/github/uchicago-library/separationsheet_site?branch=master)
 
