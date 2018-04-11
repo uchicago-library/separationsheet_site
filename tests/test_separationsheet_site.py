@@ -38,7 +38,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def testPostRemovalForm(self):
-        response = self.app.post('/removal', data={'acc_no':"2000-000", 'batch_name':"test",'identifier':"testing",'media_type':"CD",'restriction':"R-X",'note':"a note about a test accession", content_type='application/x-www-form-urlencoded'})
+        response = self.app.post('/removal', data={'acc_no':"2000-000", 'batch_name':"test",'identifier':"testing",'media_type':"CD",'restriction':"R-X",'note':"a note about a test accession"}, content_type='application/x-www-form-urlencoded')
         self.assertEqual(response.status_code, 200)
 
 if __name__ == "__main__":
