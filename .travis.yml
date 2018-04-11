@@ -1,8 +1,11 @@
 language: python
 python:
     - "3.5"
+services:
+    - mongodb
 before_script:
-    - pip install python-coveralls
+    - sleep 15
+    - mongo mydb_test --eval 'use separationsheets; db.createCollection("sheets");'
 install: 
     - "pip install -r requirements.txt"
     - "pip install -r requirements_dev.txt"
